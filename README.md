@@ -1,2 +1,2 @@
 # adas-arquitectura
-Repositorio de ADAs de la materia de arquitectura de software
+Repositorio de ADAs y tareas de la materia de arquitectura de software
