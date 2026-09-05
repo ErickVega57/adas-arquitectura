@@ -88,11 +88,11 @@ Si el subtotal supera $5,000, el pedido deberá marcarse para revisión.
 
 El filtro deberá incorporarse entre:
 
-CalcularSubtotal
-↓
-VerificarFraude
-↓
-AplicarDescuento
+*CalcularSubtotal*<br>
+↓<br>
+*VerificarFraude*<br>
+↓<br>
+*AplicarDescuento*
 
 No se permite modificar las clases de los filtros existentes para incorporar esta funcionalidad.
 
