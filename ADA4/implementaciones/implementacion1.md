@@ -8,12 +8,7 @@ contenía 44 archivos, todos en la carpeta raíz del proyecto, lo que ocasionaba
 - Sin separación de código y recursos
 - Dificultad al entender cada parte del Proyecto
 
-Estructura anterior:
-
-
-**Atributos de Calidad**
- 
-*Mantenibilidad*
+**Atributo de Calidad : Mantenibilidad**
 
 Al tener todo en el mismo archivo se dificulta el poder corregir los errores ya que un error se puede extender a mas archivos y romper el funcionamiento del sistema, es mas
 complicado de aislar componentes para poder probarlos, y también es mucho mas complicado añadirle funcionlidades si aumentan los requerimientos.
@@ -24,6 +19,7 @@ Para solucionar este problema los 44 archivos se distribuyeron en carpetas segun
 un estándar para proyectos de software normalmente aplicado cuando se usan interfaces gráficas.
 
 Estructura nueva:
+```
   mazegame
 ├──  resources
 │   ├──  images
@@ -51,7 +47,7 @@ Estructura nueva:
     └──  view
         ├──  GameGui.java
         └──  ScoreGui.java
-
+```
 Esta nueva estructura proporciona una separación clara de responsabilidades, lo que facilita agregar cambios, entender la estructura del código y el trabajo en equipo.
 
 ## Cambios en el código
@@ -59,39 +55,37 @@ Se cambiaron rutas del código, pasaron de ser absolutas al sistema de archivos 
 
 En la clase GameGui
 
-´´´java
+```java
 // nuevo atributo que guarda la ruta de los niveles.
 private String levelsPath = Objects.requireNonNull(getClass().getResource("/levels/")).getPath();
-´´´
+```
 Uso:
-´´´java
+```java
 public void nextLevelLoad() {
     // ...código
     fl.loadFile( levelsPath + fileName);
     // encuentra el archivo del siguiente nivel
 }
-´´´
+```
 Segundo cambio:
-
+En las clases GameGui y MazeObject
 Para las imagenes .png y el ícono "yeababyyea.jpg"
 
-´´´java
+```java
 // rutas relativa al sistema de archivos
-fancyLabel = new JLabel("",new ImageIcon("yeababyyea.jpg")),JLabel.LEFT);
+fancyLabel = new JLabel("",new ImageIcon("yeababyyea.jpg")),JLabel.LEFT); // GameGui
 
-fancyLabel = new JLabel("",new ImageIcon(filename)),JLabel.LEFT);
-´´´
+fancyLabel = new JLabel("",new ImageIcon(filename)),JLabel.LEFT); //MazeObject
+```
 
-´´´java
+```java
 // rutas relativas al classpath
-
 shagLabel = new JLabel("",new ImageIcon(
-                Objects.requireNonNull(getClass().getResource("/images/yeababyyea.jpg"))
+                Objects.requireNonNull(getClass().getResource("/images/yeababyyea.jpg"))  // GameGui
         ),JLabel.LEFT);
 
 fancyLabel = new JLabel("",new ImageIcon(
-                    Objects.requireNonNull(getClass().getResource("/images/" + fileName + ".png"))
+                    Objects.requireNonNull(getClass().getResource("/images/" + fileName + ".png")) //MazeObject
         ),JLabel.LEFT);
-
-´´´
+```
 
