@@ -98,7 +98,7 @@ public class GameGui extends JFrame implements ActionListener {
         //Add Menu Bar     
         newPanel = new JPanel();
         hs = new HighScore();
-        tk=new TimeKeeper();
+        tk=TimeKeeper.getInstanceTimeKeeper();
         pack();
         setVisible (true);//show our menu bar and shagLabel.. Yea baby Yea! Whoa.. to much java.
     }//end constructor
@@ -109,6 +109,7 @@ public class GameGui extends JFrame implements ActionListener {
 
             switch (theEvent.getKeyCode()) {
                 case KeyEvent.VK_UP:
+                    case KeyEvent.VK_W:
                     theArc.playerMove(-1,0,scrapMatrix,fl.dimondCount());//let the Architect know we moved, along with the current matrix
                     loadMatrixGui("updateLoad");//reload the gui to show the move
                     if (theArc.getLevel()==true) {
@@ -116,7 +117,8 @@ public class GameGui extends JFrame implements ActionListener {
                     }
                     break;
 
-                case KeyEvent.VK_DOWN:   
+                case KeyEvent.VK_DOWN: 
+                    case KeyEvent.VK_S:
                     theArc.playerMove(1,0,scrapMatrix,fl.dimondCount());//see above
                     loadMatrixGui("updateLoad");//see above
                     if (theArc.getLevel()==true) {
@@ -125,6 +127,7 @@ public class GameGui extends JFrame implements ActionListener {
                     break;
              
                 case KeyEvent.VK_LEFT:
+                    case KeyEvent.VK_A:
                     theArc.playerMove(0,-1,scrapMatrix,fl.dimondCount());//see above
                     loadMatrixGui("updateLoad");//see above
                     if (theArc.getLevel()==true) { //see above
@@ -133,6 +136,7 @@ public class GameGui extends JFrame implements ActionListener {
                     break;
              
                 case KeyEvent.VK_RIGHT:
+                    case KeyEvent.VK_D:
                     theArc.playerMove(0,1,scrapMatrix,fl.dimondCount()); //see above
                     loadMatrixGui("updateLoad");//see above
                     if (theArc.getLevel()==true) {
