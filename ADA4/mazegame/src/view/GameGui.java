@@ -98,7 +98,7 @@ public class GameGui extends JFrame implements ActionListener {
         //Add Menu Bar     
         newPanel = new JPanel();
         hs = new HighScore();
-        tk=TimeKeeper.getInstanceTimeKeeper();
+        tk=TimeKeeper.getInstance();
         pack();
         setVisible (true);//show our menu bar and shagLabel.. Yea baby Yea! Whoa.. to much java.
     }//end constructor
