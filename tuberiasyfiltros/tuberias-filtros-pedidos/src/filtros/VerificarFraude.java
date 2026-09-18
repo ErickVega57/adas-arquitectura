@@ -1,6 +1,5 @@
 package filtros;
 
-import entidades.Estado;
 import entidades.Pedido;
 
 public class VerificarFraude implements Filtro {
@@ -9,7 +8,7 @@ public class VerificarFraude implements Filtro {
     public Pedido procesar(Pedido pedido) {
         // Regla del reto: Si el subtotal supera los $5,000, se marca para revisión.
         if (pedido.getSubtotal() > 5000.0) {
-            pedido.setEstado(Estado.REVISION_FRAUDE); 
+            pedido.setPosibleFraude(true); 
         }
         
         return pedido;

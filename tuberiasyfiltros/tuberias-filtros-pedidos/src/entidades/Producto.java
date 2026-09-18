@@ -29,4 +29,16 @@ public class Producto {
     public int getExistencia() {
         return existencia;
     }
+
+    @Override
+    public String toString() {
+        return String.format(
+            "\nNombre: %s, " +
+            "Precio: %.2f, " +
+            "Cantidad Solicitada: %d, " +
+            "Existencia: %d", 
+            nombreDeProducto, precioDeProducto, cantidadSolicitada, existencia);
+    }
+
+    
 }

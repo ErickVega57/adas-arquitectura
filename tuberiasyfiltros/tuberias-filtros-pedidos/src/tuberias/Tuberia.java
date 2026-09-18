@@ -12,9 +12,10 @@ public class Tuberia {
         this.filtros = filtros;
     }
 
-    public Pedido ejecutar(Pedido pedido){
+    public Pedido recorrer(Pedido pedido){
         for(Filtro filtro: filtros){
             filtro.procesar(pedido);
+            System.out.println(pedido.toString() + "\n");
         }
         return pedido;
     }

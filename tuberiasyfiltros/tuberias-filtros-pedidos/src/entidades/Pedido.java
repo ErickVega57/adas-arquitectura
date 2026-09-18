@@ -7,6 +7,7 @@ public class Pedido {
     private final String cliente;
     List<Producto> listaDeProductos;
     double subtotal;
+    boolean posibleFraude;
     double descuento;
     double impuestos;
     double total;
@@ -16,6 +17,7 @@ public class Pedido {
         this.cliente = cliente;
         this.listaDeProductos = listaDeProductos;
         this.subtotal = 0.0;
+        this.posibleFraude = false;
         this.descuento = 0.0;
         this.impuestos = 0.0;
         this.total = 0.0;
@@ -36,6 +38,10 @@ public class Pedido {
 
     public void setSubtotal(double subtotal) {
         this.subtotal = subtotal;
+    }
+
+     public void setPosibleFraude(boolean posibleFraude) {
+        this.posibleFraude = posibleFraude;
     }
 
     public double getDescuento() {
@@ -69,4 +75,19 @@ public class Pedido {
     public void setEstado(Estado estado) {
         this.estado = estado;
     }
+
+    @Override
+    public String toString() {
+        return String.format(
+            "Cliente: %s \n" +
+            "Lista de Productos %s \n" +
+            "Subtotal: %.2f \n" +
+            "Posible Fraude: %s \n" +
+            "Descuento: %.2f \n" +
+            "Impuestos: %.2f \n" +
+            "Total: %.2f \n" +
+            "Estado: %s",
+             cliente, listaDeProductos.toString(),subtotal, posibleFraude, descuento, impuestos, total, estado );
+    }
+    
 }
