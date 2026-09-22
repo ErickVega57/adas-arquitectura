@@ -1,6 +1,13 @@
 
 # Capa de acceso a datos 
 
+Responsable de:
+
+- Asignar Id.
+- Guardar pedido.
+- Buscar por Id.
+- Determinar como se almacenan los datos(memoria/archivo).
+
 Se deberá definir un contrato para la persistencia:
 
 ```java
@@ -13,6 +20,12 @@ Y una primera implementación:
 ```java
 public class PedidoRepositoryMemoria implements PedidoRepository {
 // almacenamiento en memoria
+    private List<Pedido> pedidos;
+
+    public PedidoRepositoryMemoria(){
+        this.pedidos = new ArrayList<>();
+    }
+
     @Override
     public int guardar(){
         // implementación
