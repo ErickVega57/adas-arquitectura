@@ -12,7 +12,7 @@ posbles clases
 public class MenuPrincipal {
 
     private Scanner sc;
-    public MenuPrincipal(PedidoUI pedido){
+    public MenuPrincipal(PedidoUI pedido, Scanner sc){
     }
 
     public void ejecutar(){
