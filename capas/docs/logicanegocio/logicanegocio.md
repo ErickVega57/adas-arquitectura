@@ -38,7 +38,7 @@ Validación:
 - No puede solicitarse una cantidad superior a la existencia disponible.
 
 
-Podemos aprovechar lo hecho en tuberías y filtros 
+Podemos aprovechar lo hecho en tuberías y filtros:
 
 Una posible clase:
 ```java
@@ -54,8 +54,8 @@ public class PedidoService {
 
     public Pedido registrar(Pedido pedido) {
         // ejemplo
-        return tuberia.recorrer(pedido);
+        tuberia.recorrer(pedido);
+        // guardar
+        return pedido;
     }
-
-}
 ```
