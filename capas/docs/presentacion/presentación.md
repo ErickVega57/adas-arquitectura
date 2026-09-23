@@ -12,23 +12,19 @@ posbles clases
 public class MenuPrincipal {
 
     private Scanner sc;
-
-    public MenuPrincipal(Scanner sc)
+    public MenuPrincipal(PedidoUI pedido){
+    }
 
     public void ejecutar(){
         // bucle principal
-    }
-
-    public PedidoUI(PedidoUI pedido){
-
     }
 
     private void mostrarMenu(){
     }
 
     private int leerEntero(){
-
     }
+
     private void ejecutarOpcion(int opcion){
         //llamar a pedidoUI
     }
