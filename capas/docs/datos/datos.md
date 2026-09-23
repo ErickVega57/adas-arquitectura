@@ -20,14 +20,10 @@ Y una primera implementación:
 ```java
 public class PedidoRepositoryMemoria implements PedidoRepository {
 // almacenamiento en memoria
-    private List<Pedido> pedidos;
 
-    public PedidoRepositoryMemoria(){
-        this.pedidos = new ArrayList<>();
-    }
 
     @Override
-    public int guardar(){
+    public int guardar(Pedido pedido){
         // implementación
 
     }
@@ -47,7 +43,6 @@ public class PedidoRepositoryArchivo implements PedidoRepository {
      @Override
     public int guardar(){
         // implementación
-
     }
 
     @Override
