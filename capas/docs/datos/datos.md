@@ -41,7 +41,7 @@ Una vez funcionando la aplicación, deberán incorporar una segunda implementaci
 public class PedidoRepositoryArchivo implements PedidoRepository {
 
      @Override
-    public int guardar(){
+    public int guardar(Pedido pedido){
         // implementación
     }
 
