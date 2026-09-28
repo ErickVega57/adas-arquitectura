@@ -1,18 +1,19 @@
 package logicanegocio.servicio;
 
 import datos.PedidoRepository;
-import logicanegocio.tuberia.Tuberia;
+import modelo.entidades.Estado;
 import modelo.entidades.Pedido;
-
-import java.util.NoSuchElementException;
+import modelo.entidades.Producto;
 
 public class PedidoService {
 
-    private final Tuberia tuberia;
-    private final PedidoRepository repositorio;
-    public PedidoService(Tuberia tuberia, PedidoRepository repositorio){
+    private static final int MONTO_PARA_DESCUENTO = 1000;
+    private static final int MONTO_POSIBLE_FRAUDE = 5000;
+    private static final double DESCUENTO = 0.10;
+    private static final double IVA = 0.16;
 
-        this.tuberia = tuberia;
+    private final PedidoRepository repositorio;
+    public PedidoService(PedidoRepository repositorio){
         this.repositorio = repositorio;
     }
 
@@ -38,7 +39,80 @@ public class PedidoService {
         return repositorio.guardar(pedido);
     }
 
-    private Pedido procesarPedido(Pedido pedido){
-        return tuberia.recorrer(pedido);
+    private void procesarPedido(Pedido pedido){
+        // Procesar pedido
+        validarDatos(pedido);
+        comprobarDisponibilidad(pedido);
+        calcularSubtotal(pedido);
+        verificarFraude(pedido);
+        aplicarDescuento(pedido);
+        calcularImpuestos(pedido);
+        confirmarPedido(pedido);
+
+    }
+
+    private void aplicarDescuento(Pedido pedido){
+        double subtotal = pedido.getSubtotal();
+        pedido.setDescuento(subtotal >= MONTO_PARA_DESCUENTO ? subtotal * DESCUENTO : 0);
+    }
+
+    private void calcularImpuestos(Pedido pedido){
+        // Obtenemos los valores actuales del pedido
+        double subtotal = pedido.getSubtotal();
+        double descuento = pedido.getDescuento();
+
+
+        double baseParaImpuesto = subtotal - descuento;
+
+
+        double impuestos = baseParaImpuesto * IVA;
+        pedido.setImpuestos(impuestos);
+
+
+        double total = baseParaImpuesto + impuestos;
+        pedido.setTotal(total);
+
+    }
+
+    private void calcularSubtotal(Pedido pedido){
+        double subtotal = 0;
+
+        for (Producto producto : pedido.getListaDeProductos()){
+            subtotal += producto.getPrecioDeProducto() * producto.getCantidadSolicitada();
+        }
+
+        pedido.setSubtotal(subtotal);
+
+    }
+
+    private void comprobarDisponibilidad(Pedido pedido){
+        for(Producto producto : pedido.getListaDeProductos()){
+            if(producto.getCantidadSolicitada() > producto.getExistencia()){
+                throw new IllegalArgumentException("No hay suficiente existencia de " + producto.getNombreDeProducto());
+            }
+        }
+    }
+
+    private void confirmarPedido(Pedido pedido){
+        // Actualizamos el estado del pedido a PROCESADO para confirmarlo
+        pedido.setEstado(Estado.PROCESADO);
+
+    }
+
+    private void validarDatos(Pedido pedido){
+        if(pedido.getCliente() == null || pedido.getCliente().isEmpty()){
+            throw new IllegalArgumentException("El pedido no tiene cliente");
+        }
+        if(pedido.getListaDeProductos() == null || pedido.getListaDeProductos().isEmpty()){
+            throw new IllegalArgumentException("El pedido no tiene productos");
+        }
+    }
+
+    private void verificarFraude(Pedido pedido){
+        // Regla del reto: Si el subtotal supera los $5,000, se marca para revisión.
+        if (pedido.getSubtotal() > MONTO_POSIBLE_FRAUDE) {
+            pedido.setPosibleFraude(true);
+        }
+
     }
 }
