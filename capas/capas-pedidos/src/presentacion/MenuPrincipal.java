@@ -1,25 +1,63 @@
 package presentacion;
 
+import logicanegocio.servicio.PedidoService;
+import logicanegocio.tuberia.Tuberia;
+
+import java.util.List;
+import java.util.Scanner;
+
 public class MenuPrincipal {
 
-    static void main() {
+    private Scanner scanner;
+    private PedidoUI pedidoUI;
 
-        /*
-        EJEMPLO DE MAIN
-        Scanner scanner = new Scanner(System.in);
+    public MenuPrincipal(Scanner scanner, PedidoUI pedidoUI){
+        this.scanner = scanner;
+        this.pedidoUI = pedidoUI;
+    }
 
-        //capa de datos
-        PedidoRepositoryMemoria repositorio = new PedidoRepositoryMemoria();
+    private void mostrarMenu(){
+        System.out.println("\n===== MENÚ PRINCIPAL =====");
+        System.out.println("1. Registrar pedido");
+        System.out.println("2. Consultar pedido por ID");
+        System.out.println("3. Salir");
+        System.out.println("==========================");
+        System.out.print("Selecciona una opción: ");
+    }
 
-        //capa de negocio
-        Tuberia tuberia = new Tuberia(List.of());
-        PedidoService servicio = new PedidoService(tuberia, repositorio);
+    private void ejecutarOpciones(int opcion){
+        switch (opcion) {
+            case 1:
+                //PedidoUI.registrarPedido(servicio, sc);
+                System.out.println("1");
+                break;
+            case 2:
+                //PedidoUI.consultarPedido(servicio, sc);
+                System.out.println("2");
+                break;
+            case 3:
+                System.out.println("Cerrando el programa...");
+                break;
+            default:
+                System.out.println("Opción inválida. Intenta de nuevo.");
+        }
+    }
 
-        // presentacion
-        PedidoUI pedidoUI = new PedidoUI(scanner, servicio);
-        MenuPrincipal menu = new MenuPrincipal(scanner, pedidoUI);
-        menu.iniciar();
-        */
-        System.out.println("Hello World!");
+    public void ejecutar(){
+        int opcion;
+        do {
+            mostrarMenu();
+            opcion = scanner.nextInt();
+            ejecutarOpciones(opcion);
+        }while(opcion != 3);
+    }
+
+    public static void main(String[] args) {
+        //PedidoRepository repositorio = new PedidoRepository();
+        //PedidoService servicio = new PedidoService(repositorio);
+        Scanner sc = new Scanner(System.in);
+        MenuPrincipal menuPrincipal = new MenuPrincipal(sc, new PedidoUI());
+        menuPrincipal.ejecutar();
+        sc.close();
     }
 }
