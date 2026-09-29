@@ -1,15 +1,16 @@
 package presentacion;
 
+import datos.PedidoRepository;
 import logicanegocio.servicio.PedidoService;
-import logicanegocio.tuberia.Tuberia;
+import modelo.entidades.Pedido;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class MenuPrincipal {
 
-    private Scanner scanner;
-    private PedidoUI pedidoUI;
+    private final Scanner scanner;
+    private final PedidoUI pedidoUI;
 
     public MenuPrincipal(Scanner scanner, PedidoUI pedidoUI){
         this.scanner = scanner;
@@ -28,12 +29,10 @@ public class MenuPrincipal {
     private void ejecutarOpciones(int opcion){
         switch (opcion) {
             case 1:
-                //PedidoUI.registrarPedido(servicio, sc);
-                System.out.println("1");
+                pedidoUI.registrarPedido();
                 break;
             case 2:
-                //PedidoUI.consultarPedido(servicio, sc);
-                System.out.println("2");
+                pedidoUI.consultarPedido();
                 break;
             case 3:
                 System.out.println("Cerrando el programa...");
@@ -47,16 +46,42 @@ public class MenuPrincipal {
         int opcion;
         do {
             mostrarMenu();
-            opcion = scanner.nextInt();
+            try{
+                opcion = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                opcion = 0;
+            }
             ejecutarOpciones(opcion);
         }while(opcion != 3);
     }
 
     public static void main(String[] args) {
-        //PedidoRepository repositorio = new PedidoRepository();
-        //PedidoService servicio = new PedidoService(repositorio);
+
+        PedidoRepository repositorio = new PedidoRepository() {
+            private int siguiente = 1;
+            @Override
+            public int guardar(Pedido pedido) {
+                return siguiente++;
+            }
+
+            @Override
+            public Pedido buscarPorId(int id) {
+                return null;
+            }
+
+            @Override
+            public List<Pedido> listarTodos() {
+                return List.of();
+            }
+        };
+
+        PedidoService servicio = new PedidoService(repositorio);
+
         Scanner sc = new Scanner(System.in);
-        MenuPrincipal menuPrincipal = new MenuPrincipal(sc, new PedidoUI());
+        PedidoUI pedidoUI = new PedidoUI(servicio,sc);
+
+        MenuPrincipal menuPrincipal = new MenuPrincipal(sc, pedidoUI);
+
         menuPrincipal.ejecutar();
         sc.close();
     }
