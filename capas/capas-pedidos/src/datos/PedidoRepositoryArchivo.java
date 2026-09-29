@@ -7,6 +7,7 @@ import modelo.entidades.Producto;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class PedidoRepositoryArchivo implements PedidoRepository {
 
@@ -16,35 +17,24 @@ public class PedidoRepositoryArchivo implements PedidoRepository {
     public int guardar(Pedido pedido) {
         List<Pedido> pedidos = listarTodos();
         
-        if (pedido.getId() == 0) {
-            int maxId = 0;
-            for (Pedido p : pedidos) {
-                if (p.getId() > maxId) maxId = p.getId();
-            }
-            pedido.setId(maxId + 1);
-            pedidos.add(pedido);
-        } else {
-            for (int i = 0; i < pedidos.size(); i++) {
-                if (pedidos.get(i).getId() == pedido.getId()) {
-                    pedidos.set(i, pedido);
-                    break;
-                }
-            }
-        }
+        pedidos.add(pedido);
+
         sobrescribirArchivo(pedidos);
-        return pedido.getId();
+        return pedidos.size();
     }
 
     @Override
     public Pedido buscarPorId(int id) {
         List<Pedido> pedidos = listarTodos();
-        for (Pedido p : pedidos) {
-            if (p.getId() == id) return p;
+        int indice = id - 1;
+
+        if (indice >= 0 && indice < pedidos.size()){
+            return pedidos.get(indice);
+        }else{
+            throw new NoSuchElementException("Id no encontrado: " + id);
         }
-        return null;
     }
 
-    @Override
     public List<Pedido> listarTodos() {
         List<Pedido> pedidos = new ArrayList<>();
         File archivo = new File(RUTA_ARCHIVO);
@@ -55,8 +45,8 @@ public class PedidoRepositoryArchivo implements PedidoRepository {
             while ((linea = br.readLine()) != null) {
                 pedidos.add(deserializarPedido(linea));
             }
-        } catch (IOException e) {
-            System.err.println("Error al leer: " + e.getMessage());
+        }catch (IOException e){
+            throw new RuntimeException("Error al leer el archivo");
         }
         return pedidos;
     }
@@ -68,14 +58,13 @@ public class PedidoRepositoryArchivo implements PedidoRepository {
                 bw.newLine();
             }
         } catch (IOException e) {
-            System.err.println("Error al escribir: " + e.getMessage());
+            throw new RuntimeException("Error al escribir el archivo");
         }
     }
 
     private String serializarPedido(Pedido p) {
         StringBuilder sb = new StringBuilder();
-        sb.append(p.getId()).append(";")
-          .append(p.getCliente()).append(";")
+        sb.append(p.getCliente()).append(";")
           .append(p.getSubtotal()).append(";")
           .append(p.getDescuento()).append(";")
           .append(p.getImpuestos()).append(";")
@@ -94,26 +83,29 @@ public class PedidoRepositoryArchivo implements PedidoRepository {
     private Pedido deserializarPedido(String linea) {
         String[] partes = linea.split(";");
         List<Producto> productos = new ArrayList<>();
-        
-        if (partes.length > 7 && !partes[7].isEmpty()) {
-            String[] arrayProductos = partes[7].split("\\|");
+
+        if (partes.length > 6 && !partes[6].isEmpty()) {
+            String[] arrayProductos = partes[6].split("\\|");
             for (String prodStr : arrayProductos) {
                 String[] datosProd = prodStr.split(",");
                 // Usando el constructor exacto de Producto
-                Producto prod = new Producto(datosProd[0], Double.parseDouble(datosProd[1]), 
-                                             Integer.parseInt(datosProd[2]), Integer.parseInt(datosProd[3]));
+                Producto prod = new Producto(
+                        datosProd[0], // nombre
+                        Double.parseDouble(datosProd[1]), // precio
+                        Integer.parseInt(datosProd[2]), // cantidad
+                        Integer.parseInt(datosProd[3]) // existecia
+                );
                 productos.add(prod);
             }
         }
-        
+
         // Usando el constructor exacto de Pedido
-        Pedido p = new Pedido(partes[1], productos);
-        p.setId(Integer.parseInt(partes[0]));
-        p.setSubtotal(Double.parseDouble(partes[2]));
-        p.setDescuento(Double.parseDouble(partes[3]));
-        p.setImpuestos(Double.parseDouble(partes[4]));
-        p.setTotal(Double.parseDouble(partes[5]));
-        p.setEstado(Estado.valueOf(partes[6]));
+        Pedido p = new Pedido(partes[0], productos);
+        p.setSubtotal(Double.parseDouble(partes[1]));
+        p.setDescuento(Double.parseDouble(partes[2]));
+        p.setImpuestos(Double.parseDouble(partes[3]));
+        p.setTotal(Double.parseDouble(partes[4]));
+        p.setEstado(Estado.valueOf(partes[5]));
         
         return p;
     }

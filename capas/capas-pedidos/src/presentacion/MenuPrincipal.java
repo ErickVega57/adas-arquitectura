@@ -1,6 +1,7 @@
 package presentacion;
 
 import datos.PedidoRepository;
+import datos.PedidoRepositoryMemoria;
 import logicanegocio.servicio.PedidoService;
 import modelo.entidades.Pedido;
 
@@ -57,25 +58,10 @@ public class MenuPrincipal {
 
     public static void main(String[] args) {
 
-        PedidoRepository repositorio = new PedidoRepository() {
-            private int siguiente = 1;
-            @Override
-            public int guardar(Pedido pedido) {
-                return siguiente++;
-            }
 
-            @Override
-            public Pedido buscarPorId(int id) {
-                return null;
-            }
+        PedidoRepository repositorioMemoria = new PedidoRepositoryMemoria();
 
-            @Override
-            public List<Pedido> listarTodos() {
-                return List.of();
-            }
-        };
-
-        PedidoService servicio = new PedidoService(repositorio);
+        PedidoService servicio = new PedidoService(repositorioMemoria);
 
         Scanner sc = new Scanner(System.in);
         PedidoUI pedidoUI = new PedidoUI(servicio,sc);
@@ -84,5 +70,6 @@ public class MenuPrincipal {
 
         menuPrincipal.ejecutar();
         sc.close();
+
     }
 }

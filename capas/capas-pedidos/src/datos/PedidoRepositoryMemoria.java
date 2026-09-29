@@ -8,16 +8,14 @@ import java.util.Map;
 
 public class PedidoRepositoryMemoria implements PedidoRepository {
     
-    private Map<Integer, Pedido> almacenamiento = new HashMap<>();
+    private final Map<Integer, Pedido> almacenamiento = new HashMap<>();
     private int contadorId = 1;
 
     @Override
     public int guardar(Pedido pedido) {
-        if (pedido.getId() == 0) {
-            pedido.setId(contadorId++);
-        }
-        almacenamiento.put(pedido.getId(), pedido);
-        return pedido.getId();
+
+        almacenamiento.put(contadorId, pedido);
+        return contadorId++;
     }
 
     @Override
@@ -25,7 +23,7 @@ public class PedidoRepositoryMemoria implements PedidoRepository {
         return almacenamiento.get(id);
     }
 
-    @Override
+
     public List<Pedido> listarTodos() {
         return new ArrayList<>(almacenamiento.values());
     }
