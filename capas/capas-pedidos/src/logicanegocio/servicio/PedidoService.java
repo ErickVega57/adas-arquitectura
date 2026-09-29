@@ -24,7 +24,7 @@ public class PedidoService {
         se maneja en la UI
          */
         procesarPedido(pedido);
-        return repositorio.guardar(pedido);
+        return guardar(pedido);
     }
 
     public Pedido buscarPorId(int id){

@@ -4,7 +4,6 @@ import logicanegocio.servicio.PedidoService;
 import modelo.entidades.Pedido;
 import modelo.entidades.Producto;
 
-import java.security.Provider;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -12,8 +11,8 @@ import java.util.Scanner;
 
 public class PedidoUI {
 
-    private PedidoService pedidoService;
-    private Scanner scanner;
+    private final PedidoService pedidoService;
+    private final Scanner scanner;
 
     public PedidoUI(PedidoService pedidoService, Scanner scanner){
         //Servicio
@@ -58,6 +57,8 @@ public class PedidoUI {
             int id = pedidoService.registrarPedido(pedido);
             System.out.println("Pedido registrado con ID: " + id);
 
+        } catch (NumberFormatException e) {
+            System.out.println("Ingrese un número válido");
         } catch (IllegalArgumentException e) {
             System.out.println("Error al procesar el pedido: " + e.getMessage());
         }
