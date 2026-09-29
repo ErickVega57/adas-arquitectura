@@ -55,7 +55,8 @@ public class PedidoUI {
             Pedido pedido = new Pedido(cliente, productos);
 
             int id = pedidoService.registrarPedido(pedido);
-            System.out.println("Pedido registrado con ID: " + id);
+            System.out.println("\nPedido registrado con ID: " + id);
+            mostrarPedido(pedido);
 
         } catch (NumberFormatException e) {
             System.out.println("Ingrese un número válido");
@@ -71,22 +72,32 @@ public class PedidoUI {
             int id = Integer.parseInt(scanner.nextLine());
 
             Pedido pedido = pedidoService.buscarPorId(id);
-            System.out.println("Pedido encontrado:");
-            System.out.println("Cliente: " + pedido.getCliente());
-            System.out.println("Estado: " + pedido.getEstado());
+            System.out.println("\nPedido encontrado:");
+            mostrarPedido(pedido);
 
-            System.out.println("Productos:");
-            for (Producto p: pedido.getListaDeProductos()) {
-                System.out.println("- " + p);
-            }
-
-            System.out.println("   Subtotal:  " + pedido.getSubtotal());
-            System.out.println("   Descuento: " + pedido.getDescuento());
-            System.out.println("   Impuestos: " + pedido.getImpuestos());
-            System.out.println("   Total:     " + pedido.getTotal());
-
-        } catch (NoSuchElementException e) {
-            System.out.println("No se encontró un pedido con ese ID.");
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
         }
+    }
+
+    private void mostrarPedido(Pedido pedido){
+        System.out.println("Cliente: " + pedido.getCliente());
+        System.out.println("Estado: " + pedido.getEstado());
+
+        System.out.println("Productos:");
+        for (Producto p: pedido.getListaDeProductos()) {
+            mostrarProducto(p);
+        }
+        System.out.println("   Subtotal:  " + String.format("%.2f",pedido.getSubtotal()));
+        System.out.println("   Descuento: " + String.format("%.2f",pedido.getDescuento()));
+        System.out.println("   Impuestos: " + String.format("%.2f",pedido.getImpuestos()));
+        System.out.println("   Total:     " + String.format("%.2f",pedido.getTotal()));
+        System.out.println();
+    }
+
+    private void mostrarProducto(Producto producto){
+        System.out.printf( "[%s, %.2f, %d, %d]\n",
+        producto.getNombreDeProducto(), producto.getPrecioDeProducto(),
+        producto.getCantidadSolicitada(), producto.getExistencia());
     }
 }
