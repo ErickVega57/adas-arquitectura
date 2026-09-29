@@ -1,10 +1,8 @@
 package datos;
 
 import modelo.entidades.Pedido;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 
 public class PedidoRepositoryMemoria implements PedidoRepository {
     
@@ -20,6 +18,10 @@ public class PedidoRepositoryMemoria implements PedidoRepository {
 
     @Override
     public Pedido buscarPorId(int id) {
+        if(id > almacenamiento.size() || id < 1){
+            throw new NoSuchElementException("Pedido no encontrado: " + id);
+        }
+
         return almacenamiento.get(id);
     }
 
