@@ -1,18 +1,32 @@
 package vista;
 
 import modelo.Pedido;
+import modelo.PedidoModelo;
 import modelo.Producto;
+import observer.Observer;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class PedidoVista {
+public class PedidoVista implements Observer {
 
     private final Scanner scanner;
+    private final PedidoModelo modelo;
 
-    public PedidoVista(Scanner scanner){
-        this.scanner = scanner;
+    public PedidoVista(PedidoModelo modelo){
+        this.scanner = new Scanner(System.in);
+        this.modelo = modelo;
+    }
+
+    @Override
+    public void update() {
+        Object dato = modelo.getData();
+        if(dato instanceof String){
+            mostrarMensaje(dato);
+        } else if (dato instanceof  Pedido) {
+            mostrarPedido(dato);
+        }
     }
 
     public int mostrarMenu(){
@@ -29,7 +43,10 @@ public class PedidoVista {
         }
     }
 
-    public void mostrarError(String mensaje){
+    public void mostra@Override
+    public void update() {
+
+    }rError(String mensaje){
         System.out.println("EROR" + mensaje);
     }
 
@@ -97,5 +114,4 @@ public class PedidoVista {
                 producto.getNombreDeProducto(), producto.getPrecioDeProducto(),
                 producto.getCantidadSolicitada(), producto.getExistencia());
     }
-
 }
