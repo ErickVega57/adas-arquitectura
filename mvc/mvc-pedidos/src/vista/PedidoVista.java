@@ -43,13 +43,6 @@ public class PedidoVista implements Observer {
         }
     }
 
-    public void mostra@Override
-    public void update() {
-
-    }rError(String mensaje){
-        System.out.println("EROR" + mensaje);
-    }
-
     public void mostrarPedido(Pedido pedido){
         System.out.println("Cliente: " + pedido.getCliente());
         System.out.println("Estado: " + pedido.getEstado());
