@@ -54,6 +54,7 @@ public class ControladorPedido implementa Observador {
             // 2. Procesar la opción elegida
             try {
                 switch (opcion) {
+                     // Cada case del switch se puede separar en su propio método privado
                     case 1: // Capturar Pedido
                         Pedido nuevoPedido = this.vista.capturarPedido();
                         this.modelo.registrarPedido(nuevoPedido); 
