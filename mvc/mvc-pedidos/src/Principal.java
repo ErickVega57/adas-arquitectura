@@ -10,7 +10,7 @@ public class Principal {
         Scanner scanner = new Scanner(System.in);
         PedidoModelo modelo = new PedidoModelo();
         PedidoVista vista = new PedidoVista(modelo);
-        PedidoControlador controlador = new PedidoControlador(vista, modelo);
+        PedidoControlador controlador = new PedidoControlador(modelo, vista);
 
         controlador.iniciar();
     }
