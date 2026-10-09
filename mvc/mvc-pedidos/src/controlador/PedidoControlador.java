@@ -24,8 +24,7 @@ public class PedidoControlador implements Observer {
             try {
                 switch (opcion) {
                     case 1: // Capturar Pedido
-                        capturarPedido();
-                        // Nota: Si agregarPedido tiene éxito, el modelo ejecuta notify()
+                        this.modelo.notificar();
                         break;
 
                     case 2: // Buscar por ID
