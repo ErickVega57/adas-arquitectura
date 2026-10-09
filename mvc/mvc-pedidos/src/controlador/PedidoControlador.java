@@ -61,7 +61,7 @@ public class PedidoControlador implements Observer {
     }
 
     private void opcionInvalida(){
-        this.vista.mostrarMensaje("Opción inválida. Intente de nuevo.");
+        this.vista.mostrarError("Opción inválida. Intente de nuevo.");
     }
 
     @Override
