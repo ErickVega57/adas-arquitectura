@@ -67,7 +67,7 @@ public class PedidoModelo {
         siguienteId++;
 
         // Notificar a la Vista
-        this.data = pedido;
+        this.data = pedido.copy();
         notificar();
 
     }
