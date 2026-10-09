@@ -6,8 +6,8 @@ import observer.Observer;
 import vista.PedidoVista;
 
 public class PedidoControlador implements Observer {
-    private PedidoModelo modelo;
-    private PedidoVista vista;
+    private final PedidoModelo modelo;
+    private final PedidoVista vista;
 
     public PedidoControlador(PedidoModelo modelo, PedidoVista vista){
         this.modelo = modelo;
@@ -24,7 +24,7 @@ public class PedidoControlador implements Observer {
             try {
                 switch (opcion) {
                     case 1: // Capturar Pedido
-                        this.modelo.notificar();
+                        capturarPedido();
                         break;
 
                     case 2: // Buscar por ID
@@ -40,7 +40,7 @@ public class PedidoControlador implements Observer {
                 }
             } catch (Exception e) {
                 // Captura fallos del modelo (ej. ID no encontrado, datos inválidos)
-                this.vista.mostrarMensaje(e.getMessage());
+                this.vista.mostrarError(e.getMessage());
             }
         }
     }
@@ -66,6 +66,5 @@ public class PedidoControlador implements Observer {
 
     @Override
     public void update() {
-
     }
 }

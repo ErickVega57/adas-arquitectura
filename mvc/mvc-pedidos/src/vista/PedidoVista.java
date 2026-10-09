@@ -23,9 +23,9 @@ public class PedidoVista implements Observer {
     public void update() {
         Object dato = modelo.getData();
         if(dato instanceof String){
-            mostrarMensaje(dato);
+            mostrarMensaje((String) dato);
         } else if (dato instanceof  Pedido) {
-            mostrarPedido(dato);
+            mostrarPedido((Pedido) dato);
         }
     }
 
@@ -41,6 +41,10 @@ public class PedidoVista implements Observer {
         }catch (NumberFormatException e){
             return 0;
         }
+    }
+
+    public void mostrarError(String mensaje){
+        System.out.println("EROR" + mensaje);
     }
 
     public void mostrarPedido(Pedido pedido){
@@ -59,6 +63,7 @@ public class PedidoVista implements Observer {
     }
 
     public Pedido capturarPedido(){
+        System.out.println("\n===== Registrar pedido =====");
         System.out.print("Nombre del cliente: ");
         String cliente = scanner.nextLine();
 
@@ -80,6 +85,16 @@ public class PedidoVista implements Observer {
         }while (continuar.equals("s"));
 
         return new Pedido(cliente, productos);
+    }
+
+    public int buscarPorId(){
+        System.out.println("\n===== Buscar por ID =====");
+        System.out.print("Selecciona una opción: ");
+        try {
+            return Integer.parseInt(scanner.nextLine());
+        }catch (NumberFormatException e){
+            return 0;
+        }
     }
 
     public void mostrarMensaje(String mensaje){
