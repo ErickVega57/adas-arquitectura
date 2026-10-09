@@ -8,10 +8,10 @@ import java.util.Map;
 
 public class PedidoModelo {
 
-    private Map<Integer, Pedido> pedidos = new HashMap<>();
+    private final Map<Integer, Pedido> pedidos = new HashMap<>();
     private int siguienteId = 1;
 
-    private List<Observer> observers = new ArrayList<>();
+    private final List<Observer> observers = new ArrayList<>();
     private Object data = null;
 
     public Object getData() {
@@ -28,7 +28,7 @@ public class PedidoModelo {
         }
     }
 
-    public Pedido registrarPedido(Pedido pedido) {
+    public void registrarPedido(Pedido pedido) {
         // Validaciones
         if (pedido.getCliente() == null || pedido.getCliente().trim().isEmpty()) {
             throw new IllegalArgumentException("El cliente no puede estar vacío.");
@@ -70,7 +70,6 @@ public class PedidoModelo {
         this.data = pedido;
         notificar();
 
-        return pedido;
     }
 
     public Pedido consultarPedido(int id) {
@@ -81,7 +80,7 @@ public class PedidoModelo {
             throw new IllegalArgumentException("Pedido no encontrado");
         }
         
-        this.data = pedidoConsultado;
+        this.data = pedidoConsultado.copy();
         notificar();
         return pedidoConsultado;
     }

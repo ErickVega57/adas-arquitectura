@@ -22,9 +22,7 @@ public class PedidoVista implements Observer {
     @Override
     public void update() {
         Object dato = modelo.getData();
-        if(dato instanceof String){
-            mostrarMensaje((String) dato);
-        } else if (dato instanceof  Pedido) {
+        if(dato instanceof Pedido){
             mostrarPedido((Pedido) dato);
         }
     }
@@ -44,10 +42,11 @@ public class PedidoVista implements Observer {
     }
 
     public void mostrarError(String mensaje){
-        System.out.println("EROR" + mensaje);
+        System.out.println("[!]ERROR : " + mensaje);
     }
 
     public void mostrarPedido(Pedido pedido){
+        System.out.println("Pedido " + pedido.getId());
         System.out.println("Cliente: " + pedido.getCliente());
         System.out.println("Estado: " + pedido.getEstado());
 
@@ -89,7 +88,7 @@ public class PedidoVista implements Observer {
 
     public int buscarPorId(){
         System.out.println("\n===== Buscar por ID =====");
-        System.out.print("Selecciona una opción: ");
+        System.out.print("Ingresa un ID: ");
         try {
             return Integer.parseInt(scanner.nextLine());
         }catch (NumberFormatException e){
@@ -119,7 +118,7 @@ public class PedidoVista implements Observer {
 
     private void mostrarProducto(Producto producto){
         System.out.printf( "[%s, %.2f, %d, %d]\n",
-                producto.getNombreDeProducto(), producto.getPrecioDeProducto(),
-                producto.getCantidadSolicitada(), producto.getExistencia());
+                producto.getNombre(), producto.getPrecio(),
+                producto.getCantidad(), producto.getExistencia());
     }
 }

@@ -12,10 +12,12 @@ public class Pedido {
     double impuestos;
     double total;
     Estado estado;
+    private int id;
 
     public Pedido(String cliente, List<Producto> listaDeProductos) {
         this.cliente = cliente;
         this.listaDeProductos = listaDeProductos;
+        this.id = 0;
         this.subtotal = 0.0;
         this.posibleFraude = false;
         this.descuento = 0.0;
@@ -76,5 +78,25 @@ public class Pedido {
         this.estado = estado;
     }
 
+    public int getId(){
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
 
+    public Pedido copy(){
+        return new Pedido(this);
+    }
+    private Pedido(Pedido p){
+        this.cliente = p.cliente;
+        this.listaDeProductos = p.listaDeProductos;
+        this.id = p.id;
+        this.subtotal = p.subtotal;
+        this.posibleFraude = p.posibleFraude;
+        this.descuento = p.descuento;
+        this.impuestos = p.impuestos;
+        this.total = p.total;
+        this.estado = p.estado;
+    }
 }

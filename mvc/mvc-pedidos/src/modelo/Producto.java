@@ -14,15 +14,15 @@ public class Producto {
         this.existencia = existencia;
     }
 
-    public String getNombreDeProducto(){
+    public String getNombre(){
         return nombreDeProducto;
     }
 
-    public double getPrecioDeProducto() {
+    public double getPrecio() {
         return precioDeProducto;
     }
 
-    public int getCantidadSolicitada() {
+    public int getCantidad() {
         return cantidadSolicitada;
     }
 

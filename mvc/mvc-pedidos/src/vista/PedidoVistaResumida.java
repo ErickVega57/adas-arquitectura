@@ -11,6 +11,7 @@ public class PedidoVistaResumida extends PedidoVista{
 
     @Override
     public void mostrarPedido(Pedido pedido) {
+        System.out.println("Pedido " + pedido.getId());
         System.out.println("Cliente: " + pedido.getCliente());
         System.out.println("   Total:     " + String.format("%.2f",pedido.getTotal()));
         System.out.println("Estado: " + pedido.getEstado());
