@@ -54,7 +54,6 @@ public class PedidoControlador implements Observer {
         int id = this.vista.buscarPorId();
         
         Pedido pedido = this.modelo.consultarPedido(id);
-        this.vista.mostrarPedido(pedido);
     }
 
     private void salir(){
