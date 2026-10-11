@@ -10,7 +10,7 @@ public class Principal {
     public static void main(String[] args) {
 
         PedidoModelo modelo = new PedidoModelo();
-        PedidoVista vista = new PedidoVistaResumida(modelo);
+        PedidoVista vista = new PedidoVista(modelo);
         PedidoControlador controlador = new PedidoControlador(modelo, vista);
 
         modelo.agregarObserver(controlador);
