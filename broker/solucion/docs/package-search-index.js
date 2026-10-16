@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"broker"},{"l":"cliente"},{"l":"comunicacion"},{"l":"servicios"}];updateSearchResults();
